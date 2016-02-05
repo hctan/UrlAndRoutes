@@ -11,8 +11,15 @@ namespace UrlAndRoutes.Tests
     public class RouteTests
     {
         [TestMethod]
-        public void TestMethod1()
+        public void TestIncomingRoutes()
         {
+            // check for the URL that we hope to receive
+            TestRouteMatch("~/Admin/Index", "Admin", "Index");
+            // check that the values are being obtained from the segments
+            TestRouteMatch("~/One/Two", "One", "Two");
+            // ensure that too many or too few segments fails to match
+            TestRouteFail("~/Admin/Index/Segment");
+            TestRouteFail("~/Admin");
         }
 
         private HttpContextBase CreateHttpContext(string targetUrl = null, string httpMethod = "GET")
@@ -68,6 +75,17 @@ namespace UrlAndRoutes.Tests
                 }
             }
             return result;
+        }
+
+        private void TestRouteFail(string url)
+        {
+            // Arrange
+            RouteCollection routes = new RouteCollection();
+            RouteConfig.RegisterRoutes(routes);
+            // Act - process the route
+            RouteData result = routes.GetRouteData(CreateHttpContext(url));
+            // Assert
+            Assert.IsTrue(result == null || result.Route == null);
         }
     }
 }
