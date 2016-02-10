@@ -18,13 +18,17 @@ namespace UrlAndRoutes.Tests
             // check that the values are being obtained from the segments
             TestRouteMatch("~/One/Two", "One", "Two");
             // ensure that too many or too few segments fails to match
-            TestRouteFail("~/Admin/Index/Segment");
+            ///TestRouteFail("~/Admin/Index/Segment");
             //TestRouteFail("~/Admin");
 
-            TestRouteMatch("~/", "Home", "Index");
-            TestRouteMatch("~/Customer", "Customer", "Index");
-            TestRouteMatch("~/Customer/List", "Customer", "List");
-            TestRouteFail("~/Customer/List/All");
+            TestRouteMatch("~/", "Home", "Index", new { id = "DefaultId"});
+            TestRouteMatch("~/Customer", "Customer", "Index", new { id = "DefaultId" });
+            TestRouteMatch("~/Customer/List", "Customer", "List", new { id = "DefaultId" });
+            TestRouteMatch("~/Customer/List/All", "Customer", "List", new { id = "All"});
+            TestRouteFail("~/Customer/List/All/Delete");
+
+            TestRouteMatch("~/Shop/Index", "Home", "Index");
+            TestRouteMatch("~/Shop/Oldaction", "Home", "Index");
         }
 
         private HttpContextBase CreateHttpContext(string targetUrl = null, string httpMethod = "GET")
