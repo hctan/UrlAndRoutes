@@ -4,12 +4,14 @@ using System.Web;
 using Moq;
 using System.Web.Routing;
 using System.Reflection;
+using System.Web.Mvc;
 
 namespace UrlAndRoutes.Tests
 {
     [TestClass]
     public class RouteTests
     {
+        /*
         [TestMethod]
         public void TestIncomingRoutes()
         {
@@ -29,6 +31,20 @@ namespace UrlAndRoutes.Tests
 
             TestRouteMatch("~/Shop/Index", "Home", "Index");
             TestRouteMatch("~/Shop/Oldaction", "Home", "Index");
+        }
+        */
+
+        [TestMethod]
+        public void TestOutgoingRoutes()
+        {
+            // Arrange
+            RouteCollection routes = new RouteCollection();
+            RouteConfig.RegisterRoutes(routes);
+            RequestContext context = new RequestContext(CreateHttpContext(),new RouteData());
+            // Act - generate the URL
+            string result = UrlHelper.GenerateUrl(null, "Index", "Home", null, routes, context, true);
+            // Assert
+            Assert.AreEqual("/App/DoIndex", result);
         }
 
         private HttpContextBase CreateHttpContext(string targetUrl = null, string httpMethod = "GET")

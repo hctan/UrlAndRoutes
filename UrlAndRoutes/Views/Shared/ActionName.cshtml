@@ -12,6 +12,10 @@
 <body>
     <div>The controller is: @ViewBag.Controller</div>
     <div>The action is: @ViewBag.Action</div>
+    <div>
+        @Html.ActionLink("This is an outgoing URL", "CustomVariable")
+        <a href="~/App/DoCustomVariable">This is an outgoing URL</a>
+    </div>
 </body>
 </html>
 
