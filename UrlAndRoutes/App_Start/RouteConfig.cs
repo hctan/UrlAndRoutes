@@ -24,7 +24,7 @@ namespace UrlAndRoutes
             //Route myRoute = new Route("{controller}/{action}", new MvcRouteHandler());
             //routes.Add("MyRoute", myRoute);
 
-            routes.MapRoute("MyRoute", "{controller}/{action}");
+            routes.MapRoute("MyRoute", "{controller}/{action}", new { controller="Home", action = "Index"});
         }
     }
 }
